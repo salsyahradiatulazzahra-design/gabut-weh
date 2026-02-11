@@ -10,30 +10,26 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-}
-
 body {
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, #ff9ad5, #ffb6e6);
   color: #fff;
   text-align: center;
+  margin: 0;
   overflow-x: hidden;
 }
-
-/* START & PART CENTER */
-#start, .part {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
-
+/* START & PART CENTER */
+.part {
+  display: none;
+  position: fixed;   
+  inset: 0;          
+  padding-top: 80px;
+}
 button {
   padding: 12px 26px;
   border: none;
@@ -66,8 +62,10 @@ input {
 }
 
 /* typing */
-.typing { width: 80%; margin: 0 auto; font-size: 20px; text-shadow: 0 0 30px #fc0505;}
-
+.typing {
+  font-size: clamp(16px, 4.5vw, 22px);
+  width: 90%;
+}
 /* image animation */
 #finalImage {
   width: 260px;
@@ -82,7 +80,7 @@ input {
 
     h1 {
         margin-top: 50px;
-        font-size: clamp(24px, 6vw, 38px);
+        font-size: clamp(16px, 4.5vw, 22px);
         text-shadow: 0 0 30px #fc0505;
     }
 @keyframes fadeZoom {
@@ -187,16 +185,15 @@ input {
 
 @media (max-width: 600px) {
   h1 {
-    font-size: 22px;
-  }
-
+  font-size: clamp(24px, 6vw, 40px);
+}
   p {
     font-size: 14px;
   }
 
-  button {
-    font-size: 15px;
-  }
+ button {
+  font-size: clamp(16px, 4vw, 20px);
+}
 }
 
 .music-img {
@@ -228,12 +225,21 @@ input {
 <!-- PART 1: MUSIC -->
 <div id="part1" class="part">
   <h1>Hai <span id="nama"></span> 🫵🏼</h1>
+
+  <img 
+    id="musicImg"
+    src="music.png"
+    style="
+      width:220px;
+      margin:20px auto;
+      display:none;
+      animation: fadeZoom 1.5s forwards;
+    "
+  >
   <button onclick="toggleMusic()">Music</button>
-  <img id="musicImg" src="taylor.jpeg" class="music-img">
   <button class="secondary" id="secretBtn" onclick="playSecret()">Secret🤫</button><br>
   <button onclick="nextPart(2)">Next</button>
 </div>
-
 <!-- PART 2: MESSAGE (typing) -->
 <div id="part2" class="part">
   <h1>Kata kata hari ini qaqaa😘</h1>
@@ -284,9 +290,12 @@ startSpark();
 }
 
 function toggleMusic(){
+const musicImg = document.getElementById('musicImg');
+
+function toggleMusic(){
 
   // tampilkan gambar
-  musicImg.classList.add('show');
+  musicImg.style.display = 'block';
 
   // pertama kali
   if(currentSong === "none"){
@@ -296,7 +305,7 @@ function toggleMusic(){
     return;
   }
 
-  // balik dari secret
+  // dari secret balik ke utama
   if(currentSong === "secret"){
     music.src = "beginagain.mp4";
     music.play();
@@ -304,6 +313,11 @@ function toggleMusic(){
     return;
   }
 
+  // play / pause
+  if(currentSong === "main"){
+    music.paused ? music.play() : music.pause();
+  }
+}
   // play / pause
   if(currentSong === "main"){
     music.paused ? music.play() : music.pause();
@@ -430,3 +444,4 @@ function stopEffects(){
 
 </body>
 </html>
+
