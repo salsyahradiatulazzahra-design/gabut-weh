@@ -6,41 +6,45 @@
 
 <style>
 * { box-sizing: border-box; }
-body {
-        margin: 0;
-        overflow: hidden;
-        background: radial-gradient(circle at top, #05b3fd, #c4f8fa);
-        font-family: 'Segoe UI', sans-serif;
-        text-align: center;
-        color: rgb(253, 251, 252);
-    }
-body, .part, #start {
-    background: radial-gradient(circle at top, #f995fc, #fcfcfc);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-.part {
-  display: none;
-  position: absolute;
+
+html, body {
   width: 100%;
   height: 100%;
-  padding-top: 80px;
-  transition: opacity 0.5s ease;
-  transform: translateY(60px);
 }
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff9ad5, #ffb6e6);
+  color: #fff;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+/* START & PART CENTER */
+#start, .part {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 button {
-  display: inline-block;
-  width: auto;
   padding: 12px 26px;
   border: none;
   border-radius: 25px;
   background: #fb73c0;
-  color: rgb(227, 241, 255);
-  box-shadow: 0 0 50px rgba(119, 3, 140, 0.6);
-  font-size: 18px;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
-  margin-top: 8px;
-  max-width: 90%;
-  width: auto;
-  display: inline-block;
+  margin-top: 12px;
+  min-width: 140px;
+  max-width: 260px;
 }
 
 button.secondary { background: #fb73c0; }
@@ -49,14 +53,16 @@ button.ghost { background: transparent; border: 2px solid #9aeaf6;  }
 #start {
   display: flex; flex-direction: column; justify-content: center; height: 100%;
 }
+
 input {
   padding: 12px;
   border-radius: 20px;
   border: none;
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
   margin: 10px auto;
-  width: 240px;
+  width: 80%;
+  max-width: 260px;
 }
 
 /* typing */
@@ -179,6 +185,33 @@ input {
   }
 }
 
+@media (max-width: 600px) {
+  h1 {
+    font-size: 22px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 15px;
+  }
+}
+
+.music-img {
+  width: 220px;
+  margin-top: 20px;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: all 0.8s ease;
+  pointer-events: none;
+}
+
+.music-img.show {
+  opacity: 1;
+  transform: scale(1);
+}
 </style>
 </head>
 
@@ -196,6 +229,7 @@ input {
 <div id="part1" class="part">
   <h1>Hai <span id="nama"></span> 🫵🏼</h1>
   <button onclick="toggleMusic()">Music</button>
+  <img id="musicImg" src="taylor.jpeg" class="music-img">
   <button class="secondary" id="secretBtn" onclick="playSecret()">Secret🤫</button><br>
   <button onclick="nextPart(2)">Next</button>
 </div>
@@ -219,7 +253,7 @@ input {
     <h3>Sesuatu buat kamu🤫</h3>
     <img id="finalImage" src="meme.jpg">
     <p>ciee dapet golden tiket, congratss yaaww🥳🎉👏 #iziinn🙏#minat    
-       #in engineering we trust👉🏻😜👈🏻</p>
+       #in engineering we trust👉🏻😜👈🏻 BECANDAAA!!!</p>
     <button class="ghost" onclick="closeSecret()">Tutup</button>
   </div>
 </div>
@@ -228,6 +262,7 @@ input {
 
 <script>
 const music = document.getElementById('music');
+const musicImg = document.getElementById('musicImg');
 let secretUsed = false;
 
 /* fullscreen (mobile) */
@@ -248,10 +283,12 @@ currentSong = "none";
 startSpark();
 }
 
-/* play/pause */
 function toggleMusic(){
 
-  // pertama kali → putar lagu awal
+  // tampilkan gambar
+  musicImg.classList.add('show');
+
+  // pertama kali
   if(currentSong === "none"){
     music.src = "beginagain.mp4";
     music.play();
@@ -259,7 +296,7 @@ function toggleMusic(){
     return;
   }
 
-  // kalau lagi lagu secret → balik ke lagu awal
+  // balik dari secret
   if(currentSong === "secret"){
     music.src = "beginagain.mp4";
     music.play();
@@ -267,7 +304,7 @@ function toggleMusic(){
     return;
   }
 
-  // kalau lagi lagu awal → play / pause
+  // play / pause
   if(currentSong === "main"){
     music.paused ? music.play() : music.pause();
   }
