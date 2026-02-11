@@ -36,7 +36,7 @@ body {
   justify-content: center;   /* tengah vertikal */
   align-items: center;       /* tengah horizontal */
 
-  padding-top: 250px;         /* ⬅️ bikin agak turun */
+  padding-top: 200px;         /* ⬅️ bikin agak turun */
   text-align: center;
 }
 .part.active {
@@ -232,11 +232,12 @@ input {
   box-shadow: 0 0 30px rgba(255,255,255,.7);
 }
 
-#musicCard img{
-  width: 100%;
-  border-radius: 14px;
-  margin-bottom: 10px;
+#musicCard img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
+
 
 </style>
 </head>
@@ -254,6 +255,7 @@ input {
 <!-- PART 1: MUSIC -->
 <div id="part1" class="part">
   <h1>Hai <span id="nama"></span> 🫵🏼</h1>
+  <p>HABIS BUKA SECRET PENCET MUSIK LAGI PLISS!!! TERUS NEXT</p>
   <button onclick="toggleMusic()">Music</button>
   <button class="secondary" id="secretBtn" onclick="playSecret()">Secret🤫</button><br>
   <button onclick="nextPart(2)">Next</button>
